@@ -41,13 +41,20 @@ while not docking_sequence.has_docked():
         break
 
 # 3 Сообщение о провале миссии в случае если скорость корабля уменьшилась до нуля и до станции больше 11 м
-    if docking_sequence.speed == 0 and docking_sequence.distance > 11:
+    if docking_sequence.speed <= 0 and docking_sequence.distance > 11:
         print("Нет скорости! Не можем сблизиться!")
         break
 
 # 4 Запрос и ввод количества топлива, которое нужно сжечь
-    burn_amount = input("Сколько сжечь топлива для снижения скорости: ")
-    burn_amount = int(burn_amount)
+    f = False
+    while not f:
+        try:
+            burn_amount = int(input("Сколько сжечь топлива для снижения скорости: "))
+            f = True
+        except:
+            print("Сколько сжечь топлива для снижения скорости - необходимо "
+                  "ввести целое ненотрицательное число!")
+
 
 # 5 Сжигание топлива и обновление расстояния до космической станции
     docking_sequence.perform_burn(burn_amount)
